@@ -16,11 +16,11 @@ class demoApp(tk.Tk):
 
         self.frames = {}
 
-        frame = StartPage(container, self)
+        for F in (StartPage, PageOne):
 
-        self.frames[StartPage] = frame
-
-        frame.grid(row=0, column=0, sticky="nsew")
+            frame = F(container, self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame(StartPage)
 
@@ -40,7 +40,18 @@ class StartPage(tk.Frame):
         label = tk.Label(self, text="ehhhhh lmao", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        b1 = tk.Button(self, text="Visit Page 1", command=lambda: qf("yo"))
+        b1 = tk.Button(self, text="Visit Page 1", command=lambda: controller.show_frame(PageOne))
+        b1.pack()
+
+
+class PageOne(tk.Frame):
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="NO lmao", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        b1 = tk.Button(self, text="Home", command=lambda: controller.show_frame(StartPage))
         b1.pack()
 
 app = demoApp()
